@@ -9,6 +9,7 @@ gem 'pg'
 gem 'puma'
 gem 'rails'
 gem 'sass-rails'
+gem 'slim-rails'
 gem 'webpacker'
 
 group :test do
