@@ -165,6 +165,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    simple_form (5.0.1)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -218,6 +221,7 @@ DEPENDENCIES
   rails
   rspec-rails
   sass-rails
+  simple_form
   slim-rails
   spring
   spring-watcher-listen (~> 2.0.0)

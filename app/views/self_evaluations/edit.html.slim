@@ -1,0 +1,62 @@
+header
+  = image_tag 'company_logo', class: 'logo'
+  h1 Skill self-evaluation
+  p We would like to know what is your self evaluation of your skills. This will allow us to ask better questions during the technical interviews.
+
+= simple_form_for @self_evaluation_submission, url: self_evaluation_path(id: @self_evaluation_submission.id), method: :patch do |form|
+  h3 Role skills
+  p Those are skills which are nice to have for the "fullstack software engineer" role @Receipt Bank. Blah blah ...
+
+  table.table.table-bordered
+    thead
+      tr
+        th Skill
+        th Level
+        th Number of projects
+        th Total experience
+
+    tbody
+      = form.simple_fields_for :skill_self_evaluations do |skill_form|
+        tr
+          th
+            = skill_form.object.skill.name
+
+          td
+            = skill_form.input :level, label: false,
+                                       wrapper: false,
+                                       collection: Skill.level_options,
+                                       prompt: 'Please, select ...',
+                                       input_html: {class: 'form-control-sm'}
+
+          td = skill_form.input :number_of_projects, label: false,
+                                                     wrapper: false,
+                                                     collection: Skill.number_of_projects_options,
+                                                     prompt: 'Please, select ...',
+                                                     input_html: {class: 'form-control-sm'}
+
+          td = skill_form.input :total_experience, label: false,
+                                                   wrapper: false,
+                                                   collection: Skill.total_experience_options,
+                                                   prompt: 'Please, select ...',
+                                                   input_html: {class: 'form-control-sm'}
+
+  h3 Additional skills
+  p Those are skills which you have developed through your career but are outside the scope of the role. They are still important so we would like to know more about them.
+
+  table.table.table-bordered
+    thead
+      tr
+        th Skill
+        th Level
+        th Number of projects
+        th Total experience
+
+    tbody
+      tr
+        th = text_field_tag :skill_name, nil, class: 'form-control form-control-sm'
+        td = text_field_tag :skill_name, nil, class: 'form-control form-control-sm'
+        td = text_field_tag :skill_name, nil, class: 'form-control form-control-sm'
+        td = text_field_tag :skill_name, nil, class: 'form-control form-control-sm'
+
+  .text-center.mb-3
+    = form.submit 'Submit', class: 'btn btn-primary'
