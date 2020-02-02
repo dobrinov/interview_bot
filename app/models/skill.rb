@@ -1,5 +1,9 @@
 class Skill < ApplicationRecord
   class << self
+    def all_options
+      where(standartized: true).order(name: :asc).pluck :name, :id
+    end
+
     def level_options
       [
         ['0 - I have no experience', 0],

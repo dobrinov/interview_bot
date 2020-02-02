@@ -1,6 +1,8 @@
 class SelfEvaluationsController < ApplicationController
   def edit
     @self_evaluation_submission = SelfEvaluationSubmission.new self_evaluation: SelfEvaluation.find(params[:id])
+    @self_evaluation_submission.add_role_description_skill_self_evaluations
+    @self_evaluation_submission.add_blank_additional_skill_self_evaluation
   end
 
   def update
@@ -9,6 +11,7 @@ class SelfEvaluationsController < ApplicationController
     if @self_evaluation_submission.submit self_evaluation_submission_params
       raise 'success'
     else
+      @self_evaluation_submission.add_blank_additional_skill_self_evaluation
       render :edit
     end
   end

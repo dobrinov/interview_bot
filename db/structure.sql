@@ -25,6 +25,16 @@ CREATE TYPE public.number_of_projects AS ENUM (
 
 
 --
+-- Name: skill_self_evaluation_category; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.skill_self_evaluation_category AS ENUM (
+    'required_by_role',
+    'additional'
+);
+
+
+--
 -- Name: total_experience; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -86,36 +96,6 @@ ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 
 
 --
--- Name: companies_skills; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.companies_skills (
-    id bigint NOT NULL,
-    company_id bigint NOT NULL,
-    skill_id bigint NOT NULL
-);
-
-
---
--- Name: companies_skills_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.companies_skills_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: companies_skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.companies_skills_id_seq OWNED BY public.companies_skills.id;
-
-
---
 -- Name: interviewees; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -146,6 +126,96 @@ ALTER SEQUENCE public.interviewees_id_seq OWNED BY public.interviewees.id;
 
 
 --
+-- Name: job_applications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.job_applications (
+    id bigint NOT NULL,
+    role_description_id bigint,
+    interviewee_id bigint
+);
+
+
+--
+-- Name: job_applications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.job_applications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: job_applications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.job_applications_id_seq OWNED BY public.job_applications.id;
+
+
+--
+-- Name: role_descriptions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.role_descriptions (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    company_id bigint
+);
+
+
+--
+-- Name: role_descriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.role_descriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: role_descriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.role_descriptions_id_seq OWNED BY public.role_descriptions.id;
+
+
+--
+-- Name: role_descriptions_skills; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.role_descriptions_skills (
+    id bigint NOT NULL,
+    role_description_id bigint,
+    skill_id bigint
+);
+
+
+--
+-- Name: role_descriptions_skills_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.role_descriptions_skills_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: role_descriptions_skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.role_descriptions_skills_id_seq OWNED BY public.role_descriptions_skills.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -160,7 +230,7 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.self_evaluations (
     id bigint NOT NULL,
-    interviewee_id bigint NOT NULL,
+    job_application_id bigint NOT NULL,
     submitted_at timestamp without time zone
 );
 
@@ -192,6 +262,7 @@ CREATE TABLE public.skill_self_evaluations (
     id bigint NOT NULL,
     self_evaluation_id bigint NOT NULL,
     skill_id bigint NOT NULL,
+    category public.skill_self_evaluation_category NOT NULL,
     level integer,
     number_of_projects public.number_of_projects,
     total_experience public.total_experience
@@ -255,17 +326,31 @@ ALTER TABLE ONLY public.companies ALTER COLUMN id SET DEFAULT nextval('public.co
 
 
 --
--- Name: companies_skills id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.companies_skills ALTER COLUMN id SET DEFAULT nextval('public.companies_skills_id_seq'::regclass);
-
-
---
 -- Name: interviewees id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.interviewees ALTER COLUMN id SET DEFAULT nextval('public.interviewees_id_seq'::regclass);
+
+
+--
+-- Name: job_applications id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_applications ALTER COLUMN id SET DEFAULT nextval('public.job_applications_id_seq'::regclass);
+
+
+--
+-- Name: role_descriptions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role_descriptions ALTER COLUMN id SET DEFAULT nextval('public.role_descriptions_id_seq'::regclass);
+
+
+--
+-- Name: role_descriptions_skills id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role_descriptions_skills ALTER COLUMN id SET DEFAULT nextval('public.role_descriptions_skills_id_seq'::regclass);
 
 
 --
@@ -306,19 +391,35 @@ ALTER TABLE ONLY public.companies
 
 
 --
--- Name: companies_skills companies_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.companies_skills
-    ADD CONSTRAINT companies_skills_pkey PRIMARY KEY (id);
-
-
---
 -- Name: interviewees interviewees_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.interviewees
     ADD CONSTRAINT interviewees_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_applications job_applications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_applications
+    ADD CONSTRAINT job_applications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role_descriptions role_descriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role_descriptions
+    ADD CONSTRAINT role_descriptions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role_descriptions_skills role_descriptions_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role_descriptions_skills
+    ADD CONSTRAINT role_descriptions_skills_pkey PRIMARY KEY (id);
 
 
 --
@@ -354,24 +455,45 @@ ALTER TABLE ONLY public.skills
 
 
 --
--- Name: index_companies_skills_on_company_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_job_applications_on_interviewee_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_companies_skills_on_company_id ON public.companies_skills USING btree (company_id);
-
-
---
--- Name: index_companies_skills_on_skill_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_companies_skills_on_skill_id ON public.companies_skills USING btree (skill_id);
+CREATE INDEX index_job_applications_on_interviewee_id ON public.job_applications USING btree (interviewee_id);
 
 
 --
--- Name: index_self_evaluations_on_interviewee_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_job_applications_on_role_description_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_self_evaluations_on_interviewee_id ON public.self_evaluations USING btree (interviewee_id);
+CREATE INDEX index_job_applications_on_role_description_id ON public.job_applications USING btree (role_description_id);
+
+
+--
+-- Name: index_role_descriptions_on_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_role_descriptions_on_company_id ON public.role_descriptions USING btree (company_id);
+
+
+--
+-- Name: index_role_descriptions_skills_on_role_description_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_role_descriptions_skills_on_role_description_id ON public.role_descriptions_skills USING btree (role_description_id);
+
+
+--
+-- Name: index_role_descriptions_skills_on_skill_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_role_descriptions_skills_on_skill_id ON public.role_descriptions_skills USING btree (skill_id);
+
+
+--
+-- Name: index_self_evaluations_on_job_application_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_self_evaluations_on_job_application_id ON public.self_evaluations USING btree (job_application_id);
 
 
 --
@@ -389,11 +511,19 @@ CREATE INDEX index_skill_self_evaluations_on_skill_id ON public.skill_self_evalu
 
 
 --
--- Name: self_evaluations fk_rails_84fcb1791b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: job_applications fk_rails_6c66c006a7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.self_evaluations
-    ADD CONSTRAINT fk_rails_84fcb1791b FOREIGN KEY (interviewee_id) REFERENCES public.interviewees(id);
+ALTER TABLE ONLY public.job_applications
+    ADD CONSTRAINT fk_rails_6c66c006a7 FOREIGN KEY (role_description_id) REFERENCES public.role_descriptions(id);
+
+
+--
+-- Name: role_descriptions_skills fk_rails_714a8a406f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role_descriptions_skills
+    ADD CONSTRAINT fk_rails_714a8a406f FOREIGN KEY (skill_id) REFERENCES public.skills(id);
 
 
 --
@@ -405,19 +535,35 @@ ALTER TABLE ONLY public.skill_self_evaluations
 
 
 --
--- Name: companies_skills fk_rails_b607e99003; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: role_descriptions fk_rails_9b2e57df05; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.companies_skills
-    ADD CONSTRAINT fk_rails_b607e99003 FOREIGN KEY (company_id) REFERENCES public.companies(id);
+ALTER TABLE ONLY public.role_descriptions
+    ADD CONSTRAINT fk_rails_9b2e57df05 FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
--- Name: companies_skills fk_rails_f4128fd41d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: job_applications fk_rails_d4cfbaeb2c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.companies_skills
-    ADD CONSTRAINT fk_rails_f4128fd41d FOREIGN KEY (skill_id) REFERENCES public.skills(id);
+ALTER TABLE ONLY public.job_applications
+    ADD CONSTRAINT fk_rails_d4cfbaeb2c FOREIGN KEY (interviewee_id) REFERENCES public.interviewees(id);
+
+
+--
+-- Name: self_evaluations fk_rails_e755028ccf; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.self_evaluations
+    ADD CONSTRAINT fk_rails_e755028ccf FOREIGN KEY (job_application_id) REFERENCES public.job_applications(id);
+
+
+--
+-- Name: role_descriptions_skills fk_rails_ef1b935a2c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role_descriptions_skills
+    ADD CONSTRAINT fk_rails_ef1b935a2c FOREIGN KEY (role_description_id) REFERENCES public.role_descriptions(id);
 
 
 --
@@ -439,9 +585,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200125131558'),
 ('20200125131559'),
 ('20200125132156'),
+('20200125132157'),
 ('20200125134922'),
+('20200125134928'),
+('20200125134929'),
 ('20200125134930'),
-('20200125143746'),
-('20200125151113');
+('20200125151113'),
+('20200130211621');
 
 

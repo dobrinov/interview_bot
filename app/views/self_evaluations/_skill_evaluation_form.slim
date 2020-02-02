@@ -1,0 +1,42 @@
+table.table.table-bordered
+  thead
+    tr
+      th Skill
+      th Level
+      th Number of projects
+      th Total experience
+
+  tbody
+    = form.simple_fields_for category do |skill_form|
+      tr
+        th
+          - if allow_skill_change
+            = skill_form.association :skill, label: false,
+                                      wrapper: false,
+                                      collection: Skill.all_options,
+                                      prompt: 'Select a skill ...',
+                                      input_html: {class: 'form-control-sm'}
+
+          - else
+            = skill_form.object.skill.name
+            = skill_form.hidden_field :skill_id
+
+
+        td
+          = skill_form.input :level, label: false,
+                                     wrapper: false,
+                                     collection: Skill.level_options,
+                                     prompt: 'Please, select ...',
+                                     input_html: {class: 'form-control-sm'}
+
+        td = skill_form.input :number_of_projects, label: false,
+                                                   wrapper: false,
+                                                   collection: Skill.number_of_projects_options,
+                                                   prompt: 'Please, select ...',
+                                                   input_html: {class: 'form-control-sm'}
+
+        td = skill_form.input :total_experience, label: false,
+                                                 wrapper: false,
+                                                 collection: Skill.total_experience_options,
+                                                 prompt: 'Please, select ...',
+                                                 input_html: {class: 'form-control-sm'}

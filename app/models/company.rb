@@ -1,3 +1,3 @@
 class Company < ApplicationRecord
-  has_and_belongs_to_many :skills
+  has_many :role_descriptions
 end
