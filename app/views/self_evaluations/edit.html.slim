@@ -6,11 +6,17 @@ header
 = simple_form_for @self_evaluation_submission, url: self_evaluation_path(id: @self_evaluation_submission.id), method: :patch do |form|
   h3 Role skills
   p Those are skills which are nice to have for the "#{@self_evaluation_submission.role_description.name}" role at "#{@self_evaluation_submission.company.name}" Blah blah ...
-  = render 'skill_evaluation_form', form: form, category: :role_skill_self_evaluations, allow_skill_change: false
+  = render 'skill_evaluation_form', form: form,
+                                    category: :role_skill_self_evaluations,
+                                    allow_skill_change: false,
+                                    ensure_blank: false
 
   h3 Additional skills
   p Those are skills which you have developed through your career but are outside the scope of the role. They are still important so we would like to know more about them.
-  = render 'skill_evaluation_form', form: form, category: :additional_skill_self_evaluations, allow_skill_change: true
+  = render 'skill_evaluation_form', form: form,
+                                    category: :additional_skill_self_evaluations,
+                                    allow_skill_change: true,
+                                    ensure_blank: true
 
   .text-center.mb-3
     = form.submit 'Submit', class: 'btn btn-primary'

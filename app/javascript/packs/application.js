@@ -1,10 +1,5 @@
-import 'bootstrap/dist/js/bootstrap'
 window.$ = window.jQuery = require('jquery')
+window._ = require('lodash')
+
 require("@rails/ujs").start()
-
-document.addEventListener('DOMContentLoaded', (event) => {
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
-})
-
+require('init.js.coffee');
