@@ -9,7 +9,7 @@ class SelfEvaluationsController < ApplicationController
     @self_evaluation_submission = SelfEvaluationSubmission.new self_evaluation: SelfEvaluation.find(params[:id])
 
     if @self_evaluation_submission.submit self_evaluation_submission_params
-      raise 'success'
+      redirect_to self_evaluation_thank_you_path id: @self_evaluation_submission.id
     else
       @self_evaluation_submission.add_blank_additional_skill_self_evaluation
       render :edit
