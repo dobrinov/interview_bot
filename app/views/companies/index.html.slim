@@ -1,0 +1,11 @@
+h1 Companies
+
+table.table.table-bordered
+  thead
+    tr
+      th Name
+
+  tbody
+    - @companies.each do |company|
+      tr
+        td = link_to company.name, company_path(company)

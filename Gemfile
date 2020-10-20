@@ -5,10 +5,12 @@ ruby '2.6.3'
 
 gem 'active_attr'
 gem 'bootsnap', require: false
+gem 'font-awesome-rails'
 gem 'pg'
 gem 'puma'
 gem 'rails'
 gem 'sass-rails'
+gem 'simple_form'
 gem 'slim-rails'
 gem 'webpacker'
 

@@ -1,0 +1,56 @@
+h1 = @company.name
+
+= flash_notification
+
+.mb-5
+  h2 Roles
+  - if @roles.any?
+    table.table.table-bordered
+      thead
+        tr
+          th Name
+          th style="width: 110px;" &nbsp;
+
+      tbody
+        - @roles.each do |role|
+          tr
+            td = role.name
+            td
+              = link_to 'Edit', edit_role_description_path(role), class: 'mr-2'
+              = link_to 'Delete', role_description_path(role), method: 'delete', data: {confirm: 'Are you sure?'}
+
+  - else
+    .alert.alert-info No roles available
+
+  = link_to 'New role', new_company_role_description_path(@company), class: 'btn btn-outline-secondary'
+
+.mb-3
+  h2 Job applications
+  - if @job_applications.any?
+    table.table.table-bordered
+      thead
+        tr
+          th Name
+          th Email
+          th Applies for role
+          th Self evaluation
+          th style="width: 110px;" &nbsp;
+
+      tbody
+        - @job_applications.each do |job_application|
+          tr
+            td = job_application.interviewee.name
+            td = job_application.interviewee.email
+            td = job_application.role_description.name
+            td
+              - if job_application.self_evaluation.submitted_at?
+                = link_to 'View', self_evaluation_path(job_application.self_evaluation)
+              - else
+                = link_to 'Send this to candidate', public_self_evaluation_path(slug: job_application.self_evaluation.slug), target: '_blank'
+
+            td = link_to 'Delete', job_application_path(job_application), method: 'delete', data: {confirm: 'Are you sure?'}
+
+  - else
+    .alert.alert-info No job applications available
+
+  = link_to 'New job application', new_company_job_application_path(@company), class: 'btn btn-outline-secondary'

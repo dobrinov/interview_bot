@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :self_evaluation do
-    interviewee
+    job_application
+    slug { 'abcd1234' }
   end
 end
