@@ -1,0 +1,42 @@
+table.table.table-bordered class="#{'js-ensure-blank-row' if ensure_blank}"
+  thead
+    tr
+      th Technology
+      th Level
+      th Number of projects
+      th Total experience
+
+  tbody
+    = form.simple_fields_for category do |technology_form|
+      tr.js-experience
+        th
+          - if allow_technology_change
+            = technology_form.association :technology, label: false,
+                                      wrapper: false,
+                                      collection: Technology.all_options,
+                                      prompt: 'Select a technology ...',
+                                      input_html: {class: 'form-control-sm'}
+
+          - else
+            = technology_form.object.technology.name
+            = technology_form.hidden_field :technology_id
+
+
+        td
+          = technology_form.input :level, label: false,
+                                     wrapper: false,
+                                     collection: Technology.level_options,
+                                     prompt: 'Please, select ...',
+                                     input_html: {class: 'form-control-sm js-level'}
+
+        td = technology_form.input :number_of_projects, label: false,
+                                                   wrapper: false,
+                                                   collection: Technology.number_of_projects_options,
+                                                   prompt: 'Please, select ...',
+                                                   input_html: {class: 'form-control-sm js-number-of-projects'}
+
+        td = technology_form.input :total_experience, label: false,
+                                                 wrapper: false,
+                                                 collection: Technology.total_experience_options,
+                                                 prompt: 'Please, select ...',
+                                                 input_html: {class: 'form-control-sm js-total-experience'}

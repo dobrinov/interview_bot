@@ -1,0 +1,27 @@
+.self-evaluation
+  header
+    = image_tag 'company_logo', class: 'logo'
+    h1 = @self_evaluation_submission.role_description.name
+    h2 self evaluation
+
+    p We would like to know what is your self evaluation of your skills. This will allow us to ask better questions during the technical interviews. Please, be honest because we will use this information during the interview and it is likely that we will ask questions to validate your self evaluation.
+
+  = simple_form_for @self_evaluation_submission, url: public_self_evaluation_path(slug: @self_evaluation_submission.slug), method: :patch do |form|
+    fieldset
+      legend Role skills
+      p Those are skills which are nice to have for the #{content_tag(:strong, @self_evaluation_submission.role_description.name)} role at #{content_tag(:strong, @self_evaluation_submission.company.name)}.
+      = render 'technology_evaluation_form', form: form,
+                                             category: :role_technology_self_evaluations,
+                                             allow_technology_change: false,
+                                             ensure_blank: false
+
+    fieldset
+      legend Other skills
+      p Those are skills which you possess and are outside of the scope of the #{content_tag(:strong, @self_evaluation_submission.role_description.name)} role. We still want to hear about them.
+      = render 'technology_evaluation_form', form: form,
+                                             category: :additional_technology_self_evaluations,
+                                             allow_technology_change: true,
+                                             ensure_blank: true
+
+    .text-center.mb-3
+      = form.submit 'Submit', class: 'btn btn-primary'

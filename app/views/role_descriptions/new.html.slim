@@ -1,0 +1,9 @@
+= link_to "Back to #{@company.name}", company_path(@company), class: 'btn btn-outline-secondary'
+
+h1 = @role.name
+= flash_notification
+
+= simple_form_for [@role.company, @role] do |form|
+  = form.input :name
+  = form.association :technologies, input_html: {size: 16}
+  = form.submit class: 'btn btn-primary'

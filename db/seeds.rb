@@ -1,7 +1,36 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+technologies = Technology.
+           create!([
+                     'Ruby',
+                     'C',
+                     'C++',
+                     'Go',
+                     'Rust',
+                     'PHP',
+                     'Scala',
+                     'Clojure',
+                     'Erlang',
+                     'Elixir',
+                     'Java',
+                     'JavaScript',
+                     'TypeScript',
+                     'Ruby on Rails',
+                     'HTML',
+                     'CSS',
+                     'React',
+                     'Vue.js',
+                     'PostgreSQL',
+                     'MySQL',
+                     'MongoDB',
+                     'Cassandra',
+                     'Redis',
+                     'Git'
+                   ].map { |technology| {name: technology} }).
+           map { |technology| [technology.name.parameterize(separator: '_').to_sym, technology] }.
+           to_h
+
+company = Company.create! name: 'Example Inc'
+role_description = RoleDescription.create! name: 'Full stack software engineer', company: company, technologies: technologies.slice(:ruby, :css, :html, :postgresql).values
+
+interviewee = Interviewee.create! name: 'John Doe', email: 'john.doe@example.com'
+job_application = JobApplication.create! role_description: role_description, interviewee: interviewee
+self_evaluation = SelfEvaluation.create! job_application: job_application, slug: SecureRandom.hex

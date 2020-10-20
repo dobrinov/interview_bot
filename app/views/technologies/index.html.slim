@@ -1,0 +1,15 @@
+h1 Technologies
+
+table.table.table-bordered
+  thead
+    tr
+      th Name
+      th &nbsp;
+
+  tbody
+    - @technologies.each do |technology|
+      tr
+        td = technology.name
+        td = link_to 'Edit', edit_technology_path(technology), class: 'btn btn-outline-secondary'
+
+= link_to 'Add technology', new_technology_path, class: 'btn btn-outline-primary'

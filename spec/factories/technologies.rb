@@ -1,6 +1,5 @@
 FactoryBot.define do
-  factory :skill do
+  factory :technology do
     name { 'Ruby on Rails' }
-    standartized { false }
   end
 end
