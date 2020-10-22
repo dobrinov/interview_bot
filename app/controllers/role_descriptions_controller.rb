@@ -46,6 +46,6 @@ class RoleDescriptionsController < ApplicationController
   private
 
   def role_params
-    params.require(:role_description).permit :name, :technology_ids
+    params.require(:role_description).permit :name, technology_ids: []
   end
 end
