@@ -1,4 +1,4 @@
-class JobApplicationsController < ApplicationController
+class JobApplicationsController < AuthenticatedController
   def new
     @company = Company.find params[:company_id]
     @job_application = JobApplication.new

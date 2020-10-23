@@ -1,4 +1,4 @@
-class RoleDescriptionsController < ApplicationController
+class RoleDescriptionsController < AuthenticatedController
   def new
     @company = Company.find params[:company_id]
     @role = @company.role_descriptions.build

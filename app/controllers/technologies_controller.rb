@@ -1,4 +1,4 @@
-class TechnologiesController < ApplicationController
+class TechnologiesController < AuthenticatedController
   def index
     @technologies = Technology.all
   end

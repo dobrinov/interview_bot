@@ -1,4 +1,4 @@
-class SelfEvaluationsController < ApplicationController
+class SelfEvaluationsController < AuthenticatedController
   def show
     @self_evaluation = SelfEvaluation.find params[:id]
     @job_application = @self_evaluation.job_application
