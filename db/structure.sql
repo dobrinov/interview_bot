@@ -62,7 +62,9 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.companies (
     id bigint NOT NULL,
-    name character varying NOT NULL
+    name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -92,7 +94,9 @@ ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 CREATE TABLE public.interviewees (
     id bigint NOT NULL,
     name character varying NOT NULL,
-    email character varying NOT NULL
+    email character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -122,7 +126,9 @@ ALTER SEQUENCE public.interviewees_id_seq OWNED BY public.interviewees.id;
 CREATE TABLE public.job_applications (
     id bigint NOT NULL,
     role_description_id bigint,
-    interviewee_id bigint
+    interviewee_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -152,7 +158,9 @@ ALTER SEQUENCE public.job_applications_id_seq OWNED BY public.job_applications.i
 CREATE TABLE public.role_descriptions (
     id bigint NOT NULL,
     name character varying NOT NULL,
-    company_id bigint
+    company_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -182,7 +190,9 @@ ALTER SEQUENCE public.role_descriptions_id_seq OWNED BY public.role_descriptions
 CREATE TABLE public.role_descriptions_technologies (
     id bigint NOT NULL,
     role_description_id bigint,
-    technology_id bigint
+    technology_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -220,9 +230,11 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.self_evaluations (
     id bigint NOT NULL,
-    job_application_id bigint NOT NULL,
+    job_application_id bigint,
     slug character varying NOT NULL,
-    submitted_at timestamp without time zone
+    submitted_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -251,7 +263,9 @@ ALTER SEQUENCE public.self_evaluations_id_seq OWNED BY public.self_evaluations.i
 
 CREATE TABLE public.technologies (
     id bigint NOT NULL,
-    name character varying NOT NULL
+    name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -280,11 +294,13 @@ ALTER SEQUENCE public.technologies_id_seq OWNED BY public.technologies.id;
 
 CREATE TABLE public.technology_self_evaluations (
     id bigint NOT NULL,
-    self_evaluation_id bigint NOT NULL,
-    technology_id bigint NOT NULL,
+    self_evaluation_id bigint,
+    technology_id bigint,
     level integer,
     number_of_projects public.number_of_projects,
-    total_experience public.total_experience
+    total_experience public.total_experience,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -525,7 +541,7 @@ CREATE INDEX index_technology_self_evaluations_on_technology_id ON public.techno
 --
 
 ALTER TABLE ONLY public.role_descriptions_technologies
-    ADD CONSTRAINT fk_rails_2fd880c102 FOREIGN KEY (technology_id) REFERENCES public.technologies(id);
+    ADD CONSTRAINT fk_rails_2fd880c102 FOREIGN KEY (technology_id) REFERENCES public.technologies(id) ON DELETE CASCADE;
 
 
 --
@@ -533,7 +549,7 @@ ALTER TABLE ONLY public.role_descriptions_technologies
 --
 
 ALTER TABLE ONLY public.technology_self_evaluations
-    ADD CONSTRAINT fk_rails_46b9608c7b FOREIGN KEY (technology_id) REFERENCES public.technologies(id);
+    ADD CONSTRAINT fk_rails_46b9608c7b FOREIGN KEY (technology_id) REFERENCES public.technologies(id) ON DELETE CASCADE;
 
 
 --
@@ -541,7 +557,7 @@ ALTER TABLE ONLY public.technology_self_evaluations
 --
 
 ALTER TABLE ONLY public.role_descriptions_technologies
-    ADD CONSTRAINT fk_rails_57cbfcb545 FOREIGN KEY (role_description_id) REFERENCES public.role_descriptions(id);
+    ADD CONSTRAINT fk_rails_57cbfcb545 FOREIGN KEY (role_description_id) REFERENCES public.role_descriptions(id) ON DELETE CASCADE;
 
 
 --
@@ -549,7 +565,7 @@ ALTER TABLE ONLY public.role_descriptions_technologies
 --
 
 ALTER TABLE ONLY public.job_applications
-    ADD CONSTRAINT fk_rails_6c66c006a7 FOREIGN KEY (role_description_id) REFERENCES public.role_descriptions(id);
+    ADD CONSTRAINT fk_rails_6c66c006a7 FOREIGN KEY (role_description_id) REFERENCES public.role_descriptions(id) ON DELETE CASCADE;
 
 
 --
@@ -557,7 +573,7 @@ ALTER TABLE ONLY public.job_applications
 --
 
 ALTER TABLE ONLY public.role_descriptions
-    ADD CONSTRAINT fk_rails_9b2e57df05 FOREIGN KEY (company_id) REFERENCES public.companies(id);
+    ADD CONSTRAINT fk_rails_9b2e57df05 FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
 
 
 --
@@ -565,7 +581,7 @@ ALTER TABLE ONLY public.role_descriptions
 --
 
 ALTER TABLE ONLY public.job_applications
-    ADD CONSTRAINT fk_rails_d4cfbaeb2c FOREIGN KEY (interviewee_id) REFERENCES public.interviewees(id);
+    ADD CONSTRAINT fk_rails_d4cfbaeb2c FOREIGN KEY (interviewee_id) REFERENCES public.interviewees(id) ON DELETE CASCADE;
 
 
 --
@@ -573,7 +589,7 @@ ALTER TABLE ONLY public.job_applications
 --
 
 ALTER TABLE ONLY public.self_evaluations
-    ADD CONSTRAINT fk_rails_e755028ccf FOREIGN KEY (job_application_id) REFERENCES public.job_applications(id);
+    ADD CONSTRAINT fk_rails_e755028ccf FOREIGN KEY (job_application_id) REFERENCES public.job_applications(id) ON DELETE CASCADE;
 
 
 --
@@ -581,7 +597,7 @@ ALTER TABLE ONLY public.self_evaluations
 --
 
 ALTER TABLE ONLY public.technology_self_evaluations
-    ADD CONSTRAINT fk_rails_fce423a2aa FOREIGN KEY (self_evaluation_id) REFERENCES public.self_evaluations(id);
+    ADD CONSTRAINT fk_rails_fce423a2aa FOREIGN KEY (self_evaluation_id) REFERENCES public.self_evaluations(id) ON DELETE CASCADE;
 
 
 --
