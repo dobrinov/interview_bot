@@ -4,7 +4,7 @@ class CreateTechnologySelfEvaluations < ActiveRecord::Migration[6.0]
       t.references :self_evaluation, index: true, foreign_key: {on_delete: :cascade}
       t.references :technology, index: true, foreign_key: {on_delete: :cascade}
 
-      t.integer :level
+      t.column :level, :level
       t.column :number_of_projects, :number_of_projects
       t.column :total_experience, :total_experience
 

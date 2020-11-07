@@ -8,7 +8,7 @@ class InterviewBot.Views.Experience extends Backbone.View
 
   onLevelChange: ->
     @level = @levelSelect.val()
-    if @level == '0'
+    if @level == 'no experience'
       @numberOfProjects = 'no experience'
       @totalExperience = 'no experience'
 
@@ -18,7 +18,7 @@ class InterviewBot.Views.Experience extends Backbone.View
     @numberOfProjects = @numberOfProjectsSelect.val()
 
     if @numberOfProjects == 'no experience'
-      @level = '0'
+      @level = 'no experience'
       @totalExperience = 'no experience'
 
     @render()
@@ -27,7 +27,7 @@ class InterviewBot.Views.Experience extends Backbone.View
     @totalExperience = @totalExperienceSelect.val()
 
     if @totalExperience == 'no experience'
-      @level = '0'
+      @level = 'no experience'
       @numberOfProjects = 'no experience'
 
     @render()

@@ -10,6 +10,19 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: level; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.level AS ENUM (
+    'no experience',
+    'theoretical',
+    'beginner',
+    'advanced',
+    'expert'
+);
+
+
+--
 -- Name: number_of_projects; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -296,7 +309,7 @@ CREATE TABLE public.technology_self_evaluations (
     id bigint NOT NULL,
     self_evaluation_id bigint,
     technology_id bigint,
-    level integer,
+    level public.level,
     number_of_projects public.number_of_projects,
     total_experience public.total_experience,
     created_at timestamp(6) without time zone NOT NULL,
@@ -610,6 +623,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200125131557'),
 ('20200125131558'),
 ('20200125131559'),
+('20200125131560'),
 ('20200125132156'),
 ('20200125132157'),
 ('20200125134922'),

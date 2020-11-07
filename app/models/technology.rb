@@ -13,17 +13,11 @@ class Technology < ApplicationRecord
 
     def level_options
       [
-        ['I have no experience', 0],
-        ['1', 1],
-        ['2', 2],
-        ['3', 3],
-        ['4', 4],
-        ['5', 5],
-        ['6', 6],
-        ['7', 7],
-        ['8', 8],
-        ['9', 9],
-        ['I know and can everything', 10],
+        ['I have no experience', 'no experience'],
+        ['Theoretical', 'theoretical'],
+        ['Beginner', 'beginner'],
+        ['Advanced', 'advanced'],
+        ['Expert', 'expert'],
       ]
     end
 
