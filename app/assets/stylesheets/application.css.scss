@@ -101,16 +101,17 @@ table { table-layout: fixed; }
 
       .evaluations {
         flex-grow: 1;
+        flex-wrap: wrap;
         width: 40%;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         border-left: 1px dashed #cccccc;
       }
 
       .evaluation {
         padding: 10px;
-        margin-right: 5px;
+        margin: 2px;
         display: inline-block;
         background-color: #efefef;
         border-radius: 4px;
