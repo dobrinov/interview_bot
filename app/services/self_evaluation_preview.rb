@@ -17,6 +17,10 @@ class SelfEvaluationPreview
     @self_evaluation = self_evaluation
   end
 
+  def company_name
+    @self_evaluation.job_application.role_description.company.name
+  end
+
   def role_name
     @self_evaluation.job_application.role_description.name
   end
