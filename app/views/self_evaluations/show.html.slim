@@ -1,6 +1,33 @@
-h1 = @interviewee.name
-= @role_description.name
+.self-evaluation-preview
+  .row
+    .col.text-center
+      h1 = @self_evaluation_preview.interviewee_name
 
-h3 Role technologies
+  .row.mb-4
+    .col
+      .text-center = @self_evaluation_preview.role_name
 
-h3 Additional technologies
+  .levels
+    .header-row
+      .name &nbsp;
+      .evaluations Receipt Bank
+      .evaluations Other
+
+    - @self_evaluation_preview.levels.each do |level|
+      .body-row
+        .name = level.label
+        .evaluations
+          - level.role_technology_self_evaluations.each do |evaluation|
+           .evaluation
+              h5 = evaluation.technology_name
+
+        .evaluations
+          - level.additional_technology_self_evaluations.each do |evaluation|
+            .evaluation
+              h5 = evaluation.technology_name
+
+    .body-row
+      .name &nbsp;
+      .evaluations &nbsp;
+      .evaluations &nbsp;
+

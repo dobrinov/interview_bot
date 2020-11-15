@@ -68,6 +68,59 @@ table { table-layout: fixed; }
   }
 }
 
+.self-evaluation-preview {
+  .levels {
+    .body-row {
+      border-top: 1px dashed gray;
+      min-height: 76px;
+    }
+
+    .header-row {
+      .evaluations {
+        color: #cccccc;
+        font-size: 18px;
+        font-weight: 400;
+      }
+    }
+
+    .header-row, .body-row {
+      display: flex;
+
+      > div { padding: 1rem; }
+
+      .name {
+        flex-grow: 1;
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #cccccc;
+        font-size: 18px;
+        font-weight: 400;
+      }
+
+      .evaluations {
+        flex-grow: 1;
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-left: 1px dashed #cccccc;
+      }
+
+      .evaluation {
+        padding: 10px;
+        margin-right: 5px;
+        display: inline-block;
+        background-color: #efefef;
+        border-radius: 4px;
+
+        h5 { padding: 0; margin: 0; }
+      }
+    }
+  }
+}
+
 .landingpage {
   max-width: 800px;
   margin: 100px auto 0 auto;
