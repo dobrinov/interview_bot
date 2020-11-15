@@ -93,7 +93,7 @@ class SelfEvaluationPreview
       @computed_technology_self_evaluations[technology.kind][technology_self_evaluation.level] <<
         TechnologySelfEvaluation.new(technology.name,
                                      technology_self_evaluation.level,
-                                     technology_self_evaluation.number_of_projects,
+                                     "#{technology_self_evaluation.number_of_projects} projects",
                                      technology_self_evaluation.total_experience)
     end
 

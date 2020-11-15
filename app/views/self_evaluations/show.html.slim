@@ -19,12 +19,16 @@
         .evaluations
           - level.role_technology_self_evaluations.each do |evaluation|
            .evaluation
-              h5 = evaluation.technology_name
+             h5 = evaluation.technology_name
+             div = evaluation.total_experience
+             div = evaluation.number_of_projects
 
         .evaluations
           - level.additional_technology_self_evaluations.each do |evaluation|
             .evaluation
               h5 = evaluation.technology_name
+              div = evaluation.total_experience
+              div = evaluation.number_of_projects
 
     .body-row
       .name &nbsp;

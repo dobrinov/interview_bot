@@ -115,8 +115,10 @@ table { table-layout: fixed; }
         display: inline-block;
         background-color: #efefef;
         border-radius: 4px;
+        text-align: center;
 
-        h5 { padding: 0; margin: 0; }
+        > h5 { padding: 0; margin: 0; }
+        > div { font-size: 11px; line-height: 1; color: #999999; }
       }
     }
   }
